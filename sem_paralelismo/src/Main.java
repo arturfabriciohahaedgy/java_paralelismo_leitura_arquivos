@@ -1,8 +1,11 @@
+import javax.swing.SwingUtilities;
+
+import view.MainWindow;
 
 public class Main {
 
 	public static void main(String[] args) {
-		System.out.println("AODJASODJASO");
+		SwingUtilities.invokeLater(MainWindow::new);
 	}
 
 }
