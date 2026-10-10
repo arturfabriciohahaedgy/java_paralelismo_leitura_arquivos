@@ -34,7 +34,6 @@ import javax.swing.table.DefaultTableModel;
 
 public final class MainWindow extends JFrame {
     private static final long serialVersionUID = 1L;
-
     private final JCheckBox smallDataset = new JCheckBox("P", true);
     private final JCheckBox largeDataset = new JCheckBox("G");
     private final JTextField queryField = new JTextField();
@@ -50,6 +49,9 @@ public final class MainWindow extends JFrame {
     private SwingWorker<Void, Object[]> searchWorker;
 
     public MainWindow() {
+        final String pathDatasetP = "./sem_paralelismo/datasets/g";
+        final String pathDatasetG = "./sem_paralelismo/datasets/g";
+        final String files;
         super("Pesquisa nos datasets");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
@@ -131,9 +133,9 @@ public final class MainWindow extends JFrame {
         searchWorker = new SwingWorker<Void, Object[]>() {
             @Override
             protected Void doInBackground() throws IOException {
-                Path directory = Paths.get("sem_paralelismo", "dataset");
+                Path directory = Paths.get("sem_paralelismo", "datasets");
                 if (!Files.isDirectory(directory)) {
-                    directory = Paths.get("dataset");
+                    directory = Paths.get("datasets");
                 }
                 List<Path> files;
                 try (Stream<Path> paths = Files.list(directory)) {
