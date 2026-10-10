@@ -1,4 +1,4 @@
-package src.utils;
+package src.src.utils;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -25,7 +25,7 @@ public class FileUtils {
 
         for (File f : Objects.requireNonNull(dir.listFiles())) {
             if (f.getName().contains("."))
-                list.add(f.getName());
+                list.add(dirPath + "/" + f.getName());
         }
 
         return list;
