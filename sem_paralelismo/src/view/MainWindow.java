@@ -1,41 +1,26 @@
 package view;
 
+import src.utils.SearchUtils;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.ExecutionException;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.SwingWorker;
+import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
 public final class MainWindow extends JFrame {
     private static final long serialVersionUID = 1L;
-    private final JCheckBox smallDataset = new JCheckBox("P", true);
-    private final JCheckBox largeDataset = new JCheckBox("G");
+    private final JRadioButton smallDataset = new JRadioButton("P", true);
+    private final JRadioButton largeDataset = new JRadioButton("G");
     private final JTextField queryField = new JTextField();
     private final JButton searchButton = new JButton("PESQUISAR");
     private final JButton clearButton = new JButton("LIMPAR");
@@ -49,9 +34,6 @@ public final class MainWindow extends JFrame {
     private SwingWorker<Void, Object[]> searchWorker;
 
     public MainWindow() {
-        final String pathDatasetP = "./sem_paralelismo/datasets/g";
-        final String pathDatasetG = "./sem_paralelismo/datasets/g";
-        final String files;
         super("Pesquisa nos datasets");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
@@ -71,6 +53,9 @@ public final class MainWindow extends JFrame {
         JPanel datasets = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
         smallDataset.setToolTipText("Dataset pequeno: arq_*.txt");
         largeDataset.setToolTipText("Dataset grande: a*.txt");
+        ButtonGroup datasetGroup = new ButtonGroup();
+        datasetGroup.add(smallDataset);
+        datasetGroup.add(largeDataset);
         datasets.add(smallDataset);
         datasets.add(javax.swing.Box.createHorizontalStrut(40));
         datasets.add(largeDataset);
@@ -133,33 +118,8 @@ public final class MainWindow extends JFrame {
         searchWorker = new SwingWorker<Void, Object[]>() {
             @Override
             protected Void doInBackground() throws IOException {
-                Path directory = Paths.get("sem_paralelismo", "datasets");
-                if (!Files.isDirectory(directory)) {
-                    directory = Paths.get("datasets");
-                }
-                List<Path> files;
-                try (Stream<Path> paths = Files.list(directory)) {
-                    files = paths.filter(Files::isRegularFile).filter(path -> {
-                        String name = path.getFileName().toString();
-                        return (small && name.matches("arq_\\d+\\.txt"))
-                                || (large && name.matches("a\\d+\\.txt"));
-                    }).sorted().collect(Collectors.toList());
-                }
-                for (Path file : files) {
-                    if (isCancelled()) {
-                        break;
-                    }
-                    try (BufferedReader reader = Files.newBufferedReader(file, StandardCharsets.UTF_8)) {
-                        String line;
-                        int lineNumber = 0;
-                        while (!isCancelled() && (line = reader.readLine()) != null) {
-                            lineNumber++;
-                            if (line.toLowerCase(Locale.ROOT).contains(query)) {
-                                publish(new Object[] { file.getFileName() + ":" + lineNumber, line });
-                            }
-                        }
-                    }
-                }
+                SearchUtils.Search(small ? "./sem_paralelismo/datasets/p" : "./sem_paralelismo/datasets/g");
+                clear();
                 return null;
             }
 
@@ -185,6 +145,7 @@ public final class MainWindow extends JFrame {
                 } catch (InterruptedException exception) {
                     Thread.currentThread().interrupt();
                 } catch (ExecutionException exception) {
+                    System.out.println(exception.toString());
                     JOptionPane.showMessageDialog(MainWindow.this,
                             "Não foi possível pesquisar: " + exception.getCause().getMessage(),
                             "Erro", JOptionPane.ERROR_MESSAGE);
