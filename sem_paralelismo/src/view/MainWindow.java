@@ -31,7 +31,8 @@ public final class MainWindow extends JFrame {
             return false;
         }
     };
-    private SwingWorker<Void, Object[]> searchWorker;
+    private final JLabel timeLabel = new JLabel("Tempo da pesquisa: -");
+    private SwingWorker<Long, Object[]> searchWorker;
 
     public MainWindow() {
         super("Pesquisa nos datasets");
@@ -88,6 +89,7 @@ public final class MainWindow extends JFrame {
         JScrollPane scroll = new JScrollPane(table);
         scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         content.add(scroll, BorderLayout.CENTER);
+        content.add(timeLabel, BorderLayout.SOUTH);
 
         searchButton.addActionListener(event -> search());
         queryField.addActionListener(event -> {
@@ -115,12 +117,14 @@ public final class MainWindow extends JFrame {
 
         results.setRowCount(0);
         searchButton.setEnabled(false);
-        searchWorker = new SwingWorker<Void, Object[]>() {
+        searchWorker = new SwingWorker<Long, Object[]>() {
             @Override
-            protected Void doInBackground() throws IOException {
-                SearchUtils.Search(small ? "./sem_paralelismo/datasets/p" : "./sem_paralelismo/datasets/g");
-                clear();
-                return null;
+            protected Long doInBackground() throws IOException {
+                // Mede o tempo da pesquisa e devolve para o done()
+                long start = System.nanoTime();
+                SearchUtils.Search(small ? "./sem_paralelismo/datasets/p" : "./sem_paralelismo/datasets/g", query);
+                long end = System.nanoTime();
+                return end - start;
             }
 
             @Override
@@ -139,7 +143,8 @@ public final class MainWindow extends JFrame {
                 }
                 searchButton.setEnabled(true);
                 try {
-                    get();
+                    long elapsed = get();
+                    timeLabel.setText(String.format("Tempo da pesquisa: %.2f ms", elapsed / 1_000_000.0));
                 } catch (CancellationException ignored) {
                     // A pesquisa foi cancelada pelo botão Limpar.
                 } catch (InterruptedException exception) {
@@ -163,6 +168,7 @@ public final class MainWindow extends JFrame {
         searchButton.setEnabled(true);
         queryField.setText("");
         results.setRowCount(0);
+        timeLabel.setText("Tempo da pesquisa: -");
         queryField.requestFocusInWindow();
     }
 }

@@ -1,18 +1,19 @@
 package src.utils;
 
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
 public class SearchUtils {
-    public static void Search(String path) throws IOException {
-        List<String> lines = new ArrayList<String>();
-        List<ArrayList<String>> files = new ArrayList<ArrayList<String>>();
-        for (String file : src.utils.FileUtils.listFiles(path)) {
-            files.add((ArrayList<String>) FileUtils.readAllLines(file));
+    public static void Search(String path, String query) throws IOException {
+        List<Line> lines = new ArrayList<Line>();
+        List<ArrayList<Line>> files = new ArrayList<>();
+        for (Path file : src.utils.FileUtils.listFiles(path)) {
+            files.add((ArrayList<Line>) FileUtils.readAllLines(file));
         }
-        List<String> sortedLines = MergeSort.mergeSort(lines);
-        System.out.println(sortedLines);
-        System.out.println(files);
+        List<Line> sortedLines = MergeSort.mergeSort(files);
+        System.out.println("Busca binária `"+ query + "`:" + LinearSearch.linearSearch(sortedLines, query));
     }
 }
