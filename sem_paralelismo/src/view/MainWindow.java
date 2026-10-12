@@ -1,5 +1,6 @@
 package view;
 
+import src.utils.Line;
 import src.utils.SearchUtils;
 
 import java.awt.BorderLayout;
@@ -9,6 +10,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.CancellationException;
@@ -25,7 +27,7 @@ public final class MainWindow extends JFrame {
     private final JButton searchButton = new JButton("PESQUISAR");
     private final JButton clearButton = new JButton("LIMPAR");
     private final DefaultTableModel results = new DefaultTableModel(
-            new String[] { "Arquivo:linha", "Texto da linha" }, 0) {
+            new String[] { "Arquivo", "Linha", "Texto da linha" }, 0) {
         @Override
         public boolean isCellEditable(int row, int column) {
             return false;
@@ -85,7 +87,8 @@ public final class MainWindow extends JFrame {
         table.setRowHeight(30);
         table.setFillsViewportHeight(true);
         table.getColumnModel().getColumn(0).setPreferredWidth(160);
-        table.getColumnModel().getColumn(1).setPreferredWidth(540);
+        table.getColumnModel().getColumn(1).setPreferredWidth(40);
+        table.getColumnModel().getColumn(2).setPreferredWidth(540);
         JScrollPane scroll = new JScrollPane(table);
         scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         content.add(scroll, BorderLayout.CENTER);
@@ -122,7 +125,10 @@ public final class MainWindow extends JFrame {
             protected Long doInBackground() throws IOException {
                 // Mede o tempo da pesquisa e devolve para o done()
                 long start = System.nanoTime();
-                SearchUtils.Search(small ? "./sem_paralelismo/datasets/p" : "./sem_paralelismo/datasets/g", query);
+                ArrayList<Line> searchResult = SearchUtils.Search(small ? "./sem_paralelismo/datasets/p" : "./sem_paralelismo/datasets/g", query);
+                for (Line line : searchResult) {
+                    results.addRow(new String[]{line.file(), String.valueOf(Integer.parseInt(String.valueOf(line.line()))), line.name()});
+                }
                 long end = System.nanoTime();
                 return end - start;
             }
