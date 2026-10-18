@@ -1,4 +1,4 @@
-package src.utils;
+package utils;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -10,7 +10,7 @@ public class SearchUtils {
     public static ArrayList<Line> Search(String path, String query) throws IOException {
         List<Line> lines = new ArrayList<Line>();
         List<ArrayList<Line>> files = new ArrayList<>();
-        for (Path file : src.utils.FileUtils.listFiles(path)) {
+        for (Path file : utils.FileUtils.listFiles(path)) {
             files.add((ArrayList<Line>) FileUtils.readAllLines(file));
         }
         List<Line> sortedLines = MergeSort.mergeSort(files);

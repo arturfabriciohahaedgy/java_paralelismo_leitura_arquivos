@@ -1,7 +1,7 @@
 package view;
 
-import src.utils.Line;
-import src.utils.SearchUtils;
+import utils.Line;
+import utils.SearchUtils;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
