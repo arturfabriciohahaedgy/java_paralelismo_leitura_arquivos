@@ -4,8 +4,10 @@ import utils.Line;
 import utils.SearchUtils;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -37,7 +39,7 @@ public final class MainWindow extends JFrame {
     private SwingWorker<Long, Object[]> searchWorker;
 
     public MainWindow() {
-        super("Pesquisa nos datasets");
+        super("Pesquisa nos datasets - sem paralelismo");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
         JPanel content = new JPanel(new BorderLayout(0, 20));
@@ -92,7 +94,15 @@ public final class MainWindow extends JFrame {
         JScrollPane scroll = new JScrollPane(table);
         scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         content.add(scroll, BorderLayout.CENTER);
-        content.add(timeLabel, BorderLayout.SOUTH);
+
+        // Rodapé: tempo à esquerda e modo de execução à direita
+        JLabel modeLabel = new JLabel("Modo: SEM PARALELISMO (busca sequencial)");
+        modeLabel.setFont(modeLabel.getFont().deriveFont(Font.BOLD));
+        modeLabel.setForeground(new Color(200, 90, 0));
+        JPanel footer = new JPanel(new BorderLayout());
+        footer.add(timeLabel, BorderLayout.WEST);
+        footer.add(modeLabel, BorderLayout.EAST);
+        content.add(footer, BorderLayout.SOUTH);
 
         searchButton.addActionListener(event -> search());
         queryField.addActionListener(event -> {
