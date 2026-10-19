@@ -1,7 +1,7 @@
-package src.view;
+package view;
 
-import src.utils.Line;
-import src.utils.SearchUtils;
+import utils.Line;
+import utils.SearchUtils;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -119,7 +119,7 @@ public final class MainWindow extends JFrame {
     }
 
     private void search() {
-        String query = queryField.getText().trim().toLowerCase(Locale.ROOT);
+        String query = queryField.getText().trim();
         boolean small = smallDataset.isSelected();
         boolean large = largeDataset.isSelected();
         if (query.isEmpty() || (!small && !large)) {

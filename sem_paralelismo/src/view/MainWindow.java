@@ -120,7 +120,7 @@ public final class MainWindow extends JFrame {
     }
 
     private void search() {
-        String query = queryField.getText().trim().toLowerCase(Locale.ROOT);
+        String query = queryField.getText().trim();
         boolean small = smallDataset.isSelected();
         boolean large = largeDataset.isSelected();
         if (query.isEmpty() || (!small && !large)) {

@@ -1,4 +1,4 @@
-package src.utils;
+package utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,11 +11,12 @@ public class LinearSearch {
 
         // Olha linha por linha, do começo ao fim
         for (Line l : lines) {
-            for (String word : l.name().split(" ")) {
-                if (word.regionMatches(true, 0, query, 0, query.length())) {
+            if (l.name().trim().equals(query)) {
+//            for (String word : l.name().split(" ")) {
+//                if (word.regionMatches(true, 0, query, 0, query.length())) {
                     result.add(l);
                     break; // Já casou nesta linha, não precisa olhar as outras palavras
-                }
+//                }
             }
         }
 

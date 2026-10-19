@@ -8,12 +8,10 @@ import java.util.List;
 
 public class SearchUtils {
     public static ArrayList<Line> Search(String path, String query) throws IOException {
-        List<Line> lines = new ArrayList<Line>();
-        List<ArrayList<Line>> files = new ArrayList<>();
+        List<Line> files = new ArrayList<>();
         for (Path file : utils.FileUtils.listFiles(path)) {
-            files.add((ArrayList<Line>) FileUtils.readAllLines(file));
+            files.addAll(FileUtils.readAllLines(file));
         }
-        List<Line> sortedLines = MergeSort.mergeSort(files);
-        return LinearSearch.linearSearch(sortedLines, query);
+        return LinearSearch.linearSearch(files, query);
     }
 }

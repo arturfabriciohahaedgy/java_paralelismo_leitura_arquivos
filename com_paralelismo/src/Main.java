@@ -1,8 +1,6 @@
-package src;
-
 import javax.swing.SwingUtilities;
 
-import src.view.MainWindow;
+import view.MainWindow;
 
 public class Main {
 

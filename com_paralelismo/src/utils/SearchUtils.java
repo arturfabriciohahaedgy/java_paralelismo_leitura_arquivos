@@ -1,4 +1,4 @@
-package src.utils;
+package utils;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -16,7 +16,7 @@ public class SearchUtils {
         // Uma thread por arquivo, já volta tudo concatenado
         List<Line> found = LinearSearch.parallelLinearSearch(files, query);
 
-        // Ordena só o que foi encontrado
-        return MergeSort.mergeSort(List.of(found));
+        // Ordena só o que foi encontradof
+        return found;
     }
 }
