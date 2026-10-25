@@ -28,6 +28,9 @@ public class MetricsTest {
             if (!line.name().trim().equals("Ana")) throw new AssertionError(line);
             if (line.file().equals("a.txt") && line.line() != 2) throw new AssertionError(line);
         }
+        if (module.equals("sem_paralelismo_binary_search")
+                && result.stream().noneMatch(line -> line.file().equals("b.txt") && line.line() == 1))
+            throw new AssertionError("Faltou a primeira ocorrência de b.txt: " + result);
         if (!SearchUtils.Search(data.toString(), "Ausente").isEmpty())
             throw new AssertionError("Consulta ausente");
         try {
@@ -57,7 +60,15 @@ public class MetricsTest {
                 if (!p.getProperty("file_count").equals("3")) throw new AssertionError(p);
                 int count = p.getProperty("query").equals("Ana") ? expected : 0;
                 if (Integer.parseInt(p.getProperty("result_count")) != count) throw new AssertionError(p);
-                if (module.endsWith("binary_search")
+                if (module.equals("sem_paralelismo_binary_search")) {
+                    if (!p.getProperty("worker_threads").equals("0")
+                            || !p.getProperty("algorithm").equals("sequential_binary_with_merge_sort")
+                            || !p.getProperty("result_policy").equals("first_match_per_file")
+                            || Long.parseLong(p.getProperty("sort_main_thread_ns")) <= 0
+                            || Long.parseLong(p.getProperty("search_main_thread_ns")) <= 0
+                            || !p.getProperty("sort_workers_sum_ns").equals("0"))
+                        throw new AssertionError(p);
+                } else if (module.equals("com_paralelismo_binary_search")
                         && Long.parseLong(p.getProperty("sort_workers_sum_ns")) <= 0)
                     throw new AssertionError(p);
                 for (String key : List.of("read_wall_ns", "processing_wall_ns", "heap_after_bytes",
@@ -72,7 +83,7 @@ public class MetricsTest {
 }
 JAVA
 
-for module in sem_paralelismo com_paralelismo com_paralelismo_binary_search; do
+for module in sem_paralelismo com_paralelismo com_paralelismo_binary_search sem_paralelismo_binary_search; do
     mkdir -p "$tmp/$module/classes" "$tmp/$module/fixture"
     javac -d "$tmp/$module/classes" $(find "$repo/$module/src" -name '*.java') "$tmp/MetricsTest.java"
     java -cp "$tmp/$module/classes" MetricsTest "$module" "$tmp/$module/fixture"
