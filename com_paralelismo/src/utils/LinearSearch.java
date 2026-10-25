@@ -25,6 +25,11 @@ public class LinearSearch {
 
     // Dispara uma thread por arquivo, espera todas terminarem e concatena os resultados
     public static List<Line> parallelLinearSearch(List<List<Line>> files, String query) throws InterruptedException {
+        return parallelLinearSearch(files, query, null);
+    }
+
+    public static List<Line> parallelLinearSearch(List<List<Line>> files, String query,
+            SearchMetrics metrics) throws InterruptedException {
         List<SearchThread> threads = new ArrayList<SearchThread>();
 
         // Cria e inicia uma thread para cada arquivo
@@ -39,6 +44,10 @@ public class LinearSearch {
         for (SearchThread t : threads) {
             t.join();
             result.addAll(t.getResult());
+            if (metrics != null) {
+                metrics.workerTimes(0, t.getSearchNs());
+                metrics.put("file." + threads.indexOf(t) + ".search_ns", t.getSearchNs());
+            }
         }
 
         return result;
