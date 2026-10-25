@@ -1,0 +1,30 @@
+Campanhas: 2026-10-25_172153, 2026-10-25_172540 (principal: 2026-10-25_172153)
+Logs: C:\dev\java_paralelismo_leitura_arquivos\logs
+Pesquisas validadas: 480
+
+[OK  ] manifesto com 240 pesquisas: 2/2
+[OK  ] cada log é usado por uma única pesquisa: 480/480
+[OK  ] o log citado no manifesto existe em logs/: 480/480
+[OK  ] status=success: 480/480
+[OK  ] module do log = projeto do manifesto: 480/480
+[OK  ] query do log = termo pesquisado: 480/480
+[OK  ] algorithm e result_policy esperados para o projeto: 480/480
+[OK  ] dataset do log = <projeto>/datasets/<p|g>: 480/480
+[OK  ] file_count = arquivos do dataset: 480/480
+[OK  ] cada arquivo lido pertence ao dataset: 2880/2880
+[OK  ] linhas e bytes de cada arquivo conferem com o disco: 2880/2880
+[OK  ] arquivos do log = arquivos do dataset: 480/480
+[OK  ] loaded_lines e dataset_bytes conferem com o disco: 480/480
+[OK  ] resultados do log = resultados recalculados a partir do dataset: 480/480
+[OK  ] texto de cada resultado = termo (após trim): 480/480
+[OK  ] resultado devolvido ao executor = resultado do log: 480/480
+[OK  ] tempos positivos e fases contidas no total: 480/480
+[OK  ] tempo externo do executor >= total_ns: 480/480
+[OK  ] worker_threads = 0 (sem threads) ou 1 por arquivo (com threads): 480/480
+[OK  ] sorting_enabled conforme o algoritmo: 480/480
+[OK  ] tempos por arquivo/thread coerentes com os totais do log: 480/480
+[OK  ] repetições 1..10 em cada projeto, dataset e termo: 48/48
+[OK  ] cada bloco de repetições rodou em uma única JVM: 48/48
+[OK  ] blocos diferentes rodaram em JVMs diferentes: 2/2
+[OK  ] ambiente único em todos os logs (java): 2/2
+[OK  ] ambiente único em todos os logs (processadores): 2/2

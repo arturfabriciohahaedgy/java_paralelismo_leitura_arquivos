@@ -1,0 +1,49 @@
+campanha: 2026-10-25_172153
+inicio: 2026-10-25T17:21:53-03:00
+repeticoes_por_bloco: 10
+commit: 57d7af9651ab63a91f766c510e342e4d553983f8
+codigo_dos_modulos_alterado_em_relacao_ao_commit:
+--- java -version
+java version "25.0.2" 2026-01-20 LTS
+Java(TM) SE Runtime Environment (build 25.0.2+10-LTS-69)
+Java HotSpot(TM) 64-Bit Server VM (build 25.0.2+10-LTS-69, mixed mode, sharing)
+--- flags padrao da JVM (nenhuma flag extra e usada)
+-XX:-AOTInvokeDynamicLinking -XX:-AOTRecordTraining -XX:-AOTReplayTraining -XX:ConcGCThreads=2 -XX:G1ConcRefinementThreads=6 -XX:InitialHeapSize=267812352 -XX:MarkStackSize=4194304 -XX:MaxHeapSize=4284997632 -XX:MinHeapSize=6815736 -XX:+PrintCommandLineFlags -XX:ReservedCodeCacheSize=251658240 -XX:+SegmentedCodeCache -XX:+UseCompressedOops -XX:+UseG1GC -XX:-UseLargePagesIndividualAllocation 
+--- sistema
+MINGW64_NT-10.0-26200 joseaugustop 3.5.4-cbe555e0.x86_64 2024-10-10 20:32 UTC x86_64 Msys
+cpu: Intel(R) Core(TM) i5-9400F CPU @ 2.90GHz
+nucleos_fisicos: 6
+processadores_logicos: 6
+ram_bytes: 17139990528
+so: Microsoft Windows 11 Pro 10.0.26200
+GUID do Esquema de Energia: 381b4222-f694-41f0-9685-ff5bb260df2e  (Equilibrado)
+--- carga de fundo antes da campanha
+carga_cpu_total_percentual_amostras: 34 47 24 41 33
+carga_cpu_total_percentual_media: 35.8
+processo_top: iCUE 95% de 1 nucleo
+processo_top: Discord 15% de 1 nucleo
+processo_top: QmlRenderer 15% de 1 nucleo
+processo_top: idea64 12% de 1 nucleo
+processo_top: Discord 3% de 1 nucleo
+--- sha256 dos datasets (identicos nos 4 modulos)
+8603ba8c7656287e76914a611137895fd3ce77578eb45f99af0831aa2d5af672 *./g/a1.txt
+1a5e543ed93da2a158a741dd986070f88ab30c8678f48d6122e7498ae13ee12b *./g/a2.txt
+d5f56d7f1eb5e9e76accaa5bc00e59a00e617aa42ab3cfbff673cd76c32737ec *./g/a3.txt
+cb26526e8086e2f09e10812ab5f1db1d7eb1a4835bc5bc76ae11bf9b049bfed3 *./g/a4.txt
+5222a76d61aa2eaa8d6d59f16e29e36f51b362121a69996ec4721ff2b2134f71 *./g/a5.txt
+4eb6278046331ecec251be7d7cf7aef159ef5567cb086c11b82773b0f8f59bf8 *./g/a6.txt
+304eed65fe309d54f2ded48035275595493e8697db0df4c5f2df661d65513fa9 *./g/a7.txt
+0e7db12bfda7ea3b92507a17c44d41a4e7348645c131a025693fb268960eaaae *./p/arq_1.txt
+0b4798068d6bb83c9380488767d86e0499f7761354404c4edf727955a68343f5 *./p/arq_2.txt
+a633708aadbec2d110d1e61ac6a3f6550616c894e032e83c2abc51dabd7c0b7c *./p/arq_3.txt
+244d45ebe4b3c596acb12efb42e92af741ce9fc423e25da511929873840592e4 *./p/arq_4.txt
+34f9aa3815923625d1f4843799626468ba3013d987229b65edc52c1b6ac056b1 *./p/arq_5.txt
+fim: 2026-10-25T17:22:27-03:00
+--- carga de fundo depois da campanha
+carga_cpu_total_percentual_amostras: 30 28 27 29 28
+carga_cpu_total_percentual_media: 28.4
+processo_top: iCUE 97% de 1 nucleo
+processo_top: Discord 36% de 1 nucleo
+processo_top: idea64 17% de 1 nucleo
+processo_top: QmlRenderer 14% de 1 nucleo
+processo_top: Discord 7% de 1 nucleo
